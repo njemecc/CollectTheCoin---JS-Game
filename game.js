@@ -1,8 +1,6 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-const FPS = 60;
-
 const entities = [];
 const systems = [];
 
@@ -94,7 +92,7 @@ function movementSystem(entities, deltaTime) {
 
 const gameOverSystem = (entities) => {
   entities.map((entity) => {
-    if (entities[0].player.falls > 4) {
+    if (entities[0].player.falls >= 4) {
       //   alert(`Game Over! Your score is: ${entities[0].player.score}`);
       //   entities[0].player.falls = 0;
       //   entities[0].player.score = 0;
@@ -116,17 +114,24 @@ const gameOverSystem = (entities) => {
         canvas.height / 2
       );
 
-      // Customize the message based on the score
       let message = "Well done!";
       if (entities[0].player.score < 10) {
         message = "Better luck next time.";
       } else if (entities[0].player.score < 20) {
         message = "Great job!";
+      } else if (entities[0].player.score > 50) {
+        message = "IMPOSSIBLE !";
       }
 
       ctx.fillText(message, canvas.width / 2, canvas.height / 2 + 50);
 
-      return; // Skip rendering entities during game over
+      const playAgainButton = document.getElementById("playAgainButton");
+      playAgainButton.style.display = "block";
+      playAgainButton.style.position = "absolute";
+      playAgainButton.style.left =
+        canvas.width / 2 - playAgainButton.offsetWidth / 2 + 550 + "px";
+      playAgainButton.style.top = canvas.height / 2 + 300 + "px";
+      return;
     }
   });
 };
@@ -219,4 +224,18 @@ window.addEventListener("keyup", (e) => {
     playerEntity.player.image = chestImage;
     playerEntity.player.isOpen = false;
   }
+});
+
+function resetGame() {
+  entities.length = 0;
+
+  playerEntity.player.score = 0;
+  playerEntity.player.falls = 0;
+
+  entities.push(playerEntity, coinEntity);
+}
+
+document.getElementById("playAgainButton").addEventListener("click", () => {
+  resetGame();
+  document.getElementById("playAgainButton").style.display = "none";
 });

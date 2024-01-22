@@ -11,6 +11,20 @@
         height: 100vh;
         margin: 0;
       }
+      #playAgainButton {
+        display: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4caf50; /* Green */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      #playAgainButton:hover {
+        background-color: #45a049; /* Darker Green */
+      }
 
       canvas {
         border: 1px solid #000;
@@ -20,6 +34,8 @@
   </head>
   <body>
     <canvas id="gameCanvas" width="800" height="500"></canvas>
+    <button id="playAgainButton">Play Again</button>
+
     <img class="coin" src="/images/coin.png" style="display: none" />
     <img class="chest" src="/images/chest.png" style="display: none" />
     <img
